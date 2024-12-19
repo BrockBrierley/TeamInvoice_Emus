@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ public class FirstPersonController : NetworkBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
+    [SerializeField] private CinemachineCamera cinemachineCamera;
+
 
 
     private Vector3 currentMovement;
@@ -38,11 +41,9 @@ public class FirstPersonController : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (!IsOwner)
-        {
-            Destroy(playerInputHandler.gameObject);
-            return;
-        }
+        if (!IsOwner) return;
+
+        cinemachineCamera.Priority = 100;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
