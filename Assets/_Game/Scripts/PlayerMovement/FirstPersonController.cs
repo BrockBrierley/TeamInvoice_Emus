@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class FirstPersonController : MonoBehaviour
+public class FirstPersonController : NetworkBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed = 3.0f;
@@ -18,7 +19,7 @@ public class FirstPersonController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] private GameObject mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
 
 
@@ -27,16 +28,29 @@ public class FirstPersonController : MonoBehaviour
     private float CurrentSpeed => walkSpeed * (playerInputHandler.SprintTriggered ? sprintMultiplier : 1f);
 
 
-    private void Start()
+    private void Update()
     {
+        if (!IsOwner) return;
+
+        HandleMovement();
+        HandleRotation();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            Destroy(playerInputHandler.gameObject);
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    private void Update()
+    public override void OnNetworkDespawn()
     {
-        HandleMovement();
-        HandleRotation();
+        if (!IsOwner) return;
     }
 
     private Vector3 CalculateWorldDirection()
