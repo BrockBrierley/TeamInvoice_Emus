@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    //[Header("Turret Settings")]
-   // [SerializeField] private float rotationSpeed = 5f;
-    public float rotationSpeed = 5f;
-    public Transform turretHead;
-    public Transform firePoint;
-    public GameObject projectilePrefab;
-    public float fireRate = 1f;
+    [Header("Turret Settings")]
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private Transform towerRotator; 
+    [SerializeField] private Transform firePoint; 
+    [SerializeField] private GameObject projectilePrefab; 
+    [SerializeField] private float fireRate = 1f; 
+
 
     private Transform currentTarget;
     private float fireCooldown;
@@ -27,6 +27,7 @@ public class TowerBehaviour : MonoBehaviour
         {
             RotateTowardsTarget();
             HandleShooting();
+
         }
 
     }
@@ -72,9 +73,9 @@ public class TowerBehaviour : MonoBehaviour
 
     void RotateTowardsTarget()
     {
-        Vector3 direction = currentTarget.position - turretHead.position;
+        Vector3 direction = currentTarget.position - towerRotator.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        turretHead.rotation = Quaternion.Slerp(turretHead.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        towerRotator.rotation = Quaternion.Slerp(towerRotator.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
     void HandleShooting()
@@ -89,8 +90,13 @@ public class TowerBehaviour : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        // Add projectile-specific logic here (e.g., apply force or set direction)
+        if (projectilePrefab == null || firePoint == null)
+        {
+            Debug.LogWarning("Projectile prefab or fire point is not assigned!");
+            return;
+        }
+        Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        
     }
 
     void OnDrawGizmosSelected()
