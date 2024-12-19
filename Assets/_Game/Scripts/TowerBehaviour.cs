@@ -9,7 +9,8 @@ public class TowerBehaviour : MonoBehaviour
     [SerializeField] private Transform towerRotator; 
     [SerializeField] private Transform firePoint; 
     [SerializeField] private GameObject projectilePrefab; 
-    [SerializeField] private float fireRate = 1f; 
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private LayerMask enemyLayer;
 
 
     private Transform currentTarget;
@@ -35,7 +36,7 @@ public class TowerBehaviour : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (IsInLayerMask(other.gameObject, enemyLayer))
         {
             Debug.Log("Enemy entered detection range: " + other.name);
             enemiesInRange.Add(other.transform);
@@ -44,7 +45,7 @@ public class TowerBehaviour : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (IsInLayerMask(other.gameObject, enemyLayer))
         {
             enemiesInRange.Remove(other.transform);
         }
@@ -103,5 +104,11 @@ public class TowerBehaviour : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, GetComponent<SphereCollider>().radius);
+    }
+
+    // Helper method to check if a GameObject is in the specified LayerMask
+    private bool IsInLayerMask(GameObject obj, LayerMask layerMask)
+    {
+        return (layerMask.value & (1 << obj.layer)) != 0;
     }
 }

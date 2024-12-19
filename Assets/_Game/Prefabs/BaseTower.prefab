@@ -195,6 +195,9 @@ MonoBehaviour:
   firePoint: {fileID: 9212609224855759136}
   projectilePrefab: {fileID: 867928093760708102, guid: 79d2ac886783b8a49aad8fe48d6efff2, type: 3}
   fireRate: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!135 &7169762355777110383
 SphereCollider:
   m_ObjectHideFlags: 0
