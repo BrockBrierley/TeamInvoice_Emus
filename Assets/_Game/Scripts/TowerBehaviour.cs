@@ -1,17 +1,23 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerBehaviour : MonoBehaviour
 {
-    [Header("Turret Settings")]
+    [Header("Tower Settings")]
     [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private Transform towerRotator; 
-    [SerializeField] private Transform firePoint; 
-    [SerializeField] private GameObject projectilePrefab; 
+    [SerializeField] private Transform towerRotator;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private LayerMask enemyLayer;
 
+
+    [Header("Burst Attack Settings")]
+    [SerializeField] private bool useBurstFire = false;
+    [SerializeField] private int burstCount = 3;
+    [SerializeField] private float burstInterval = 0.2f;
 
     private Transform currentTarget;
     private float fireCooldown;
@@ -84,7 +90,15 @@ public class TowerBehaviour : MonoBehaviour
         fireCooldown -= Time.deltaTime;
         if (fireCooldown <= 0f)
         {
-            Shoot();
+            //checks bool to see if needs to burst fire or not
+            if (useBurstFire)
+            {
+                StartCoroutine(FireBurst());
+            }
+            else
+            {
+                Shoot();
+            }
             fireCooldown = 1f / fireRate;
         }
     }
@@ -97,7 +111,16 @@ public class TowerBehaviour : MonoBehaviour
             return;
         }
         Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        
+
+    }
+
+    private IEnumerator FireBurst()
+    {
+        for (int i = 0; i < burstCount; i++)
+        {
+            Shoot();
+            yield return new WaitForSeconds(burstInterval);
+        }
     }
 
     void OnDrawGizmosSelected()
