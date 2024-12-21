@@ -1687,6 +1687,7 @@ GameObject:
   - component: {fileID: 1114776570}
   - component: {fileID: 1114776572}
   - component: {fileID: 1114776571}
+  - component: {fileID: 1114776573}
   m_Layer: 5
   m_Name: LobbiesScreen
   m_TagString: Untagged
@@ -1754,6 +1755,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114776569}
   m_CullTransparentMesh: 1
+--- !u!114 &1114776573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1114776569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e84cea15075d946bd6b10dcab0c527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lobbyItemParent: {fileID: 1828617509}
+  lobbyItemPrefab: {fileID: 3340544624602769440, guid: 370b431e1a3d10d4f97a1f0375c93bea, type: 3}
 --- !u!1 &1181325312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,10 +2174,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1114776569}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1114776573}
+        m_TargetAssemblyTypeName: LobbiesListSample, Assembly-CSharp
+        m_MethodName: RefreshList
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
