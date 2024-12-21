@@ -7,6 +7,7 @@ using UnityEngine;
 public class TowerBehaviour : MonoBehaviour
 {
     [Header("Tower Settings")]
+    [SerializeField] private bool targetFurthest = false;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private Transform towerRotator;
     [SerializeField] private Transform firePoint;
@@ -30,7 +31,7 @@ public class TowerBehaviour : MonoBehaviour
     {
         //get sphere collider and set its radius
         detectionCollider = GetComponent<SphereCollider>();
-        if (detectionCollider != null && detectionCollider.isTrigger) 
+        if (detectionCollider != null && detectionCollider.isTrigger)
         {
             detectionCollider.radius = detectionRadius;
         }
@@ -48,9 +49,7 @@ public class TowerBehaviour : MonoBehaviour
         {
             RotateTowardsTarget();
             HandleShooting();
-
         }
-
     }
 
 
@@ -58,7 +57,6 @@ public class TowerBehaviour : MonoBehaviour
     {
         if (IsInLayerMask(other.gameObject, enemyLayer))
         {
-            Debug.Log("Enemy entered detection range: " + other.name);
             enemiesInRange.Add(other.transform);
         }
     }
@@ -72,39 +70,40 @@ public class TowerBehaviour : MonoBehaviour
     }
 
     void UpdateTarget()
-    {
+    {        
         if (enemiesInRange.Count == 0)
         {
             currentTarget = null;
             return;
         }
 
-        //finds closest enemy
-        float closestDistance = Mathf.Infinity;
+        // Determine the closest or furthest enemy based on the toggle
+        float bestDistance = targetFurthest ? 0f : Mathf.Infinity;
+        Transform bestTarget = null;
+
         foreach (var enemy in enemiesInRange)
         {
             float distance = Vector3.Distance(transform.position, enemy.position);
-            if (distance < closestDistance)
+            
+            if (targetFurthest ? distance > bestDistance : distance < bestDistance)
             {
-                closestDistance = distance;
-                currentTarget = enemy;
+                bestDistance = distance;
+                bestTarget = enemy;
             }
         }
+
+        currentTarget = bestTarget;
     }
 
     void RotateTowardsTarget()
     {
         // Calculate the center of the target based on its bounds
         Vector3 targetPosition = GetTargetCenter(currentTarget);
-       
+
         Debug.DrawLine(towerRotator.position, targetPosition, Color.green);
         Vector3 direction = targetPosition - towerRotator.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         towerRotator.rotation = Quaternion.Slerp(towerRotator.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-       //  Vector3 direction = currentTarget.position - towerRotator.position;
-       //  Quaternion lookRotation = Quaternion.LookRotation(direction);
-       //  towerRotator.rotation = Quaternion.Slerp(towerRotator.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
     // Helper method to calculate the center of the target
@@ -175,8 +174,11 @@ public class TowerBehaviour : MonoBehaviour
 
     private void OnValidate()
     {
-        // Update the radius in the Editor when the value changes
-        if (detectionCollider == null) detectionCollider = GetComponent<SphereCollider>();
+        if (detectionCollider == null)
+        {
+            detectionCollider = GetComponent<SphereCollider>();
+        }
+
         if (detectionCollider != null)
         {
             detectionCollider.radius = detectionRadius;
