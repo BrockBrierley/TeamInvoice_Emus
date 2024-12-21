@@ -15,6 +15,7 @@ public class TowerBehaviour : MonoBehaviour
     [SerializeField] private float fireRate = 1f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float detectionRadius = 15f;
+    [SerializeField] private ObjectPool projectilePool;
 
     [Header("Burst Attack Settings")]
     [SerializeField] private bool useBurstFire = false;
@@ -142,12 +143,24 @@ public class TowerBehaviour : MonoBehaviour
 
     private void Shoot()
     {
-        if (projectilePrefab == null || firePoint == null)
+        if (firePoint == null)
         {
-            Debug.LogWarning("Projectile prefab or fire point is not assigned!");
+            Debug.LogWarning("Fire point is not assigned!");
             return;
         }
-        Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+        // Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        //get a projectile from the pool
+        GameObject projectile = projectilePool.GetObject();
+        projectile.transform.position = firePoint.position;
+        projectile.transform.rotation = firePoint.rotation;
+
+        // Add logic to return the projectile to the pool (e.g., after a delay or on collision)
+        TowerProjectile projectileScript = projectile.GetComponent<TowerProjectile>();
+        if (projectileScript != null)
+        {
+            projectileScript.Initialize(projectilePool);
+        }
 
     }
 
