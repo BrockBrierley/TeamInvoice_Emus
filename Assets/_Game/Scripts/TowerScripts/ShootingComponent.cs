@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -19,16 +20,50 @@ public class ShootingComponent : MonoBehaviour
         fireCooldown -= Time.deltaTime;
         if (fireCooldown < 0)
         {
-            if (useBurstFire)
+            //runs the LOS check
+            if (HasLineOfSight(target))
             {
-                StartCoroutine(FireBurst(target));
+                if (useBurstFire)
+                {
+                    StartCoroutine(FireBurst(target));
+                }
+                else
+                {
+                    Shoot(target);
+                }
+                fireCooldown = 1f / fireRate;
+            }
+        }
+    }
+
+
+    //will probably need to update the raycast check in the future to only check for specific
+    //obstruction layers as the project builds in complexity, for now its only checking if the 
+    //raycast hits anything other than the target/enemy
+    private bool HasLineOfSight(Transform target)
+    {
+        Vector3 direction = target.position - firePoint.position;
+        float distance = direction.magnitude;
+
+        //debug line to see the raycast in action
+        Debug.DrawLine(firePoint.position, target.position, Color.red);
+
+        if (Physics.Raycast(firePoint.position,direction, out RaycastHit hit, distance))
+        {
+            //checks to see if racast hit target directly
+            if(hit.transform == target)
+            {
+                return true;
             }
             else
             {
-                Shoot(target);
+                //raycast hit something other than the enemy
+                return false;
             }
-            fireCooldown = 1f / fireRate;
+
         }
+            //no obstructions or hits, should be a clear LOS
+            return true;
     }
 
     private void Shoot(Transform target)
