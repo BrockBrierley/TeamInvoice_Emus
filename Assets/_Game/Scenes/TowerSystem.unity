@@ -282,7 +282,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
@@ -383,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 781599570}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6, y: 0.952, z: 17.96}
+  m_LocalPosition: {x: -6.81, y: 0.952, z: -3.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -403,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2087591802484911545, guid: f0a8c51dbacefff43849aa988b88a7c9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6116335066410481110, guid: f0a8c51dbacefff43849aa988b88a7c9, type: 3}
       propertyPath: fireRate
@@ -576,7 +576,7 @@ Transform:
   m_GameObject: {fileID: 904540867}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.83, y: 2, z: -5.57}
+  m_LocalPosition: {x: -2.83, y: 11.4, z: -5.57}
   m_LocalScale: {x: 10, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -626,7 +626,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
@@ -727,7 +727,7 @@ Transform:
   m_GameObject: {fileID: 907337529}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.12, y: 1.08, z: 22.44}
+  m_LocalPosition: {x: -2.12, y: 1.08, z: -1.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -839,7 +839,7 @@ Transform:
   m_GameObject: {fileID: 926458459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.42, y: 3.48, z: -3.88}
+  m_LocalPosition: {x: -4.42, y: 1.35, z: -7.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1182,8 +1182,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  detectionRadius: 16.8
+  detectionRadius: 15.1
   targetFurthest: 0
+  firePoint: {fileID: 664498075}
 --- !u!114 &1326400601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1276,7 +1277,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
@@ -1377,7 +1378,7 @@ Transform:
   m_GameObject: {fileID: 1721215289}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2, y: 0.952, z: -4.16}
+  m_LocalPosition: {x: -2.2, y: 0.952, z: -5.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1653,7 +1654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8420559773756057481, guid: f0a8c51dbacefff43849aa988b88a7c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.3
+      value: -4.98
       objectReference: {fileID: 0}
     - target: {fileID: 8420559773756057481, guid: f0a8c51dbacefff43849aa988b88a7c9, type: 3}
       propertyPath: m_LocalPosition.y

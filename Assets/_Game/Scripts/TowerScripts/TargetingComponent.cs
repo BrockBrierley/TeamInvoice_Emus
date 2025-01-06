@@ -6,10 +6,11 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float detectionRadius;
     [SerializeField] private bool targetFurthest;
+    [SerializeField] private Transform firePoint;
 
     private SphereCollider detectionCollider;
     private readonly List<Transform> enemiesInRange = new();
-    public Transform CurrentTarget {  get; private set; }
+    public Transform CurrentTarget { get; private set; }
 
 
     private void Awake()
@@ -27,7 +28,7 @@ public class TargetingComponent : MonoBehaviour
 
     private void OnValidate()
     {
-        // Update the collider's radius when changes are made in the Inspector
+        // Update the collider's radius when changes are made in the inspector
         if (detectionCollider == null)
         {
             detectionCollider = GetComponent<SphereCollider>();
@@ -71,14 +72,36 @@ public class TargetingComponent : MonoBehaviour
         foreach (var enemy in enemiesInRange)
         {
             float distance = Vector3.Distance(transform.position, enemy.position);
+            bool hasLineOfSight = HasLineOfSight(enemy);
 
-            if (targetFurthest ? distance > bestDistance : distance < bestDistance)
+            if (hasLineOfSight)
             {
-                bestDistance = distance;
-                bestTarget = enemy;
+                if (targetFurthest ? distance > bestDistance : distance < bestDistance)
+                {
+                    bestDistance = distance;
+                    bestTarget = enemy;
+                }
             }
         }
 
         CurrentTarget = bestTarget;
     }
+
+    private bool HasLineOfSight(Transform target)
+    {
+        Vector3 direction = target.position - firePoint.position;
+        float distance = direction.magnitude;
+
+        //debug line to see the raycast in action
+        Debug.DrawLine(firePoint.position, target.position, Color.blue);
+
+        if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, distance))
+        {
+            return hit.transform == target;
+        }
+        //no obstructions, return true
+        return true;
+
+    }
+
 }

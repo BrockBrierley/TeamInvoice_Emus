@@ -18,16 +18,7 @@ public class TowerProjectile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
-
-   // void OnTriggerEnter(Collider other)
-   // {
-   //     if (other.CompareTag("Enemy"))
-   //     {
-   //         // Handle damage or enemy behavior here
-   //         Destroy(gameObject);
-   //     }
-   // }
+    }      
 
     public void Initialize(ObjectPool objectPool)
     {
@@ -36,6 +27,10 @@ public class TowerProjectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //deal damage to enemies
+        }
         //update collision logic at some point
 
         //return to the projectile pool
