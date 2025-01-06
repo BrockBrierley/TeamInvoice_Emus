@@ -5,4 +5,5 @@ using UnityEngine;
 public class UserData
 {
     public string displayName;
+    public string userAuthId;
 }
