@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -23,6 +24,13 @@ public class FirstPersonController : NetworkBehaviour
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
     [SerializeField] private CinemachineCamera cinemachineCamera;
+    [SerializeField] private GameObject overheadDisplay;
+
+
+
+    [HideInInspector]
+    public NetworkVariable<FixedString32Bytes> PlayerName = new NetworkVariable<FixedString32Bytes>();
+
 
 
 
@@ -34,19 +42,27 @@ public class FirstPersonController : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
-
         HandleMovement();
         HandleRotation();
     }
 
     public override void OnNetworkSpawn()
     {
+        if (IsServer)
+        {
+            UserData userData = HostSingleton._instance.hostGameManager.networkServer.GetUserDataFromClientId(OwnerClientId);
+
+            PlayerName.Value = userData.displayName;
+        }
+
         if (!IsOwner) return;
 
         cinemachineCamera.Priority = 100;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (overheadDisplay != null) overheadDisplay.SetActive(false);
     }
 
     public override void OnNetworkDespawn()

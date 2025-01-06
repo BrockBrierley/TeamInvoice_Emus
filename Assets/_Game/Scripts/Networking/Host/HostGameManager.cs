@@ -21,11 +21,14 @@ public class HostGameManager : IDisposable
     private string joinCode;
     private string lobbyId;
 
-    private NetworkServer networkServer;
+    public NetworkServer networkServer { get; private set; }
 
     public async void Dispose()
     {
-        HostSingleton._instance.StopCoroutine(nameof(ServerHeartbeatLobby));
+        if (HostSingleton._instance != null)
+        {
+            HostSingleton._instance.StopCoroutine(nameof(ServerHeartbeatLobby));
+        }
 
         if (!string.IsNullOrEmpty(lobbyId))
         {
