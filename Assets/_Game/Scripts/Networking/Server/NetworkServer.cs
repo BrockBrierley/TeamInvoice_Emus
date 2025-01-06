@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkServer
+public class NetworkServer : IDisposable
 {
     private NetworkManager networkManager;
 
@@ -47,5 +47,20 @@ public class NetworkServer
 
         response.Approved = true;
         response.CreatePlayerObject = true;
+    }
+
+    public void Dispose()
+    {
+        if(networkManager != null)
+        {
+            networkManager.ConnectionApprovalCallback -= ApprovalCheck;
+            networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
+            networkManager.OnServerStarted -= OnNetworkReady;
+
+            if (networkManager.IsListening)
+            { 
+                networkManager.Shutdown(); 
+            }
+        }
     }
 }

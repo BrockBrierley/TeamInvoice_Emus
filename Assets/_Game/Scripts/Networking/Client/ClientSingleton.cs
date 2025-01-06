@@ -39,4 +39,9 @@ public class ClientSingleton : MonoBehaviour
 
         return await clientGameManager.InitAsync();
     }
+
+    private void OnDestroy()
+    {
+        clientGameManager?.Dispose();
+    }
 }

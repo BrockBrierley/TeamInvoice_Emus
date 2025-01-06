@@ -14,7 +14,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     private const int MaxConnections = 5;
     private Allocation allocation;
@@ -22,6 +22,26 @@ public class HostGameManager
     private string lobbyId;
 
     private NetworkServer networkServer;
+
+    public async void Dispose()
+    {
+        HostSingleton._instance.StopCoroutine(nameof(ServerHeartbeatLobby));
+
+        if (!string.IsNullOrEmpty(lobbyId))
+        {
+            try
+            {
+                await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
+            }
+            catch(LobbyServiceException error)
+            {
+                Debug.Log(error);
+            }
+
+            lobbyId = string.Empty;
+        }
+        networkServer?.Dispose();
+    }
 
     public async Task StartHostAsync()
     {
