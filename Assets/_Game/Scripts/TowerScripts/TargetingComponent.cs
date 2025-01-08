@@ -8,7 +8,11 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private bool targetFurthest;
     [SerializeField] private Transform firePoint;
 
-    
+
+    private bool isSearching = false;
+    // exposes this for other components
+    public bool IsSearching => isSearching;
+
     private SphereCollider detectionCollider;
     private readonly List<Transform> enemiesInRange = new();
     public Transform CurrentTarget { get; private set; }
@@ -66,6 +70,8 @@ public class TargetingComponent : MonoBehaviour
         if (enemiesInRange.Count == 0)
         {
             CurrentTarget = null;
+            //no enemies in detection sphere, wont enter searching "state"
+            isSearching = false;
             return;
         }
 
@@ -86,7 +92,18 @@ public class TargetingComponent : MonoBehaviour
                 }
             }
         }
-        CurrentTarget = bestTarget;
+        if (bestTarget != null)
+        {
+            CurrentTarget = bestTarget;
+            //finds a target and stops searching
+            isSearching = false;
+        }
+        else
+        {
+            CurrentTarget = null;
+            isSearching = true;
+        }
+       // CurrentTarget = bestTarget;
     }
 
     private bool HasLineOfSight(Transform target)

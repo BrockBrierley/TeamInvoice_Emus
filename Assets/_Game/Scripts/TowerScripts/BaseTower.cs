@@ -22,6 +22,10 @@ public class BaseTower : MonoBehaviour
             rotation.RotateTowards(targeting.CurrentTarget);
             shooting.HandleShooting(targeting.CurrentTarget);
         }
+        else if (targeting.IsSearching)
+        {
+            rotation.Search();
+        }
 
     }
 }
