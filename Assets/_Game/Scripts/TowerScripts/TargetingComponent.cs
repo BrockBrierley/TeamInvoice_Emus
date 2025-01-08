@@ -8,6 +8,7 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private bool targetFurthest;
     [SerializeField] private Transform firePoint;
 
+    
     private SphereCollider detectionCollider;
     private readonly List<Transform> enemiesInRange = new();
     public Transform CurrentTarget { get; private set; }
@@ -60,6 +61,8 @@ public class TargetingComponent : MonoBehaviour
 
     public void UpdateTarget()
     {
+
+
         if (enemiesInRange.Count == 0)
         {
             CurrentTarget = null;
@@ -83,7 +86,6 @@ public class TargetingComponent : MonoBehaviour
                 }
             }
         }
-
         CurrentTarget = bestTarget;
     }
 
@@ -95,13 +97,21 @@ public class TargetingComponent : MonoBehaviour
         //debug line to see the raycast in action
         Debug.DrawLine(firePoint.position, target.position, Color.blue);
 
-        if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, distance))
+        //ex;udes the projectile layer
+        int layerMask = ~LayerMask.GetMask("Projectile");
+
+        if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, distance, layerMask))
         {
-            return hit.transform == target;
+            if (hit.transform == target)
+            {
+                return true;
+            }
+            else
+            {               
+                return false;
+            }
+            
         }
-        //no obstructions, return true
         return true;
-
     }
-
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3629694117926517997}
   - component: {fileID: 4474716372388440821}
   - component: {fileID: -2556403632351296624}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TowerProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
