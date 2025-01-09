@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2270680952674522917}
   - component: {fileID: 4622435980091619812}
   - component: {fileID: 8754464586672438045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TowerRotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 8420559773756057481}
   - component: {fileID: 6116335066410481110}
   - component: {fileID: 8857672910736946798}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BaseTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137c1cf2c7996214383c21b4d7f5a86e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetFurthest: 0
   rotationSpeed: 5
   towerRotator: {fileID: 7688348663751852264}
   firePoint: {fileID: 7135114034762726045}
@@ -167,6 +168,8 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+  detectionRadius: 15
+  projectilePool: {fileID: 0}
   useBurstFire: 0
   burstCount: 3
   burstInterval: 0.2
@@ -203,7 +206,7 @@ GameObject:
   - component: {fileID: 3787650963408823783}
   - component: {fileID: 3772445506688362125}
   - component: {fileID: 5731132117376438080}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +314,7 @@ GameObject:
   - component: {fileID: 215195621036910265}
   - component: {fileID: 5290071251575861050}
   - component: {fileID: 2021854128387331720}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TowerShaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +424,7 @@ GameObject:
   - component: {fileID: 6539195370987538673}
   - component: {fileID: 8811388269204436387}
   - component: {fileID: 1657161849665317122}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +532,7 @@ GameObject:
   - component: {fileID: 5293477541797085775}
   - component: {fileID: 8100421693484217207}
   - component: {fileID: 4241967410660344652}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TowerFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7135114034762726045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +671,7 @@ GameObject:
   - component: {fileID: 5019240006686972563}
   - component: {fileID: 4312094832711917805}
   - component: {fileID: 2246115383576304254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TowerBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

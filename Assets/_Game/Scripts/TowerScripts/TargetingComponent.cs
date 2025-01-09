@@ -71,6 +71,8 @@ public class TargetingComponent : MonoBehaviour
         {
             CurrentTarget = null;
             //no enemies in detection sphere, wont enter searching "state"
+            //will create behaviour for and idle state for here, eventually 
+            //it will be done in a state machine
             isSearching = false;
             return;
         }
@@ -100,6 +102,8 @@ public class TargetingComponent : MonoBehaviour
         }
         else
         {
+            //when there are enemies within detection radius but none can be seen
+            //go into a "searching" state, this will eventually be made a state machine
             CurrentTarget = null;
             isSearching = true;
         }
@@ -115,7 +119,7 @@ public class TargetingComponent : MonoBehaviour
         Debug.DrawLine(firePoint.position, target.position, Color.blue);
 
         //ex;udes the projectile layer
-        int layerMask = ~LayerMask.GetMask("Projectile");
+        int layerMask = ~LayerMask.GetMask("Projectile", "Tower");
 
         if (Physics.Raycast(firePoint.position, direction, out RaycastHit hit, distance, layerMask))
         {

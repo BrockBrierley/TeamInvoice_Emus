@@ -22,7 +22,7 @@ public class RotationComponent : MonoBehaviour
 
     public void Search()
     {
-        float rotationStep = rotationSpeed *2 * Time.deltaTime;
+        float rotationStep = rotationSpeed *5 * Time.deltaTime;
         float rotationDirection = isRotatingLeft ? -1f : 1f;
 
         towerRotator.Rotate(Vector3.up, rotationStep * rotationDirection);
