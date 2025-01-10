@@ -7,6 +7,7 @@ public class TargetingComponent : MonoBehaviour
     [SerializeField] private float detectionRadius;
     [SerializeField] private bool targetFurthest;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private bool isTargetLocked = false;
 
 
     private bool isSearching = false;
@@ -66,6 +67,18 @@ public class TargetingComponent : MonoBehaviour
     public void UpdateTarget()
     {
 
+        if (isTargetLocked && CurrentTarget != null)
+        {
+            if (HasLineOfSight(CurrentTarget))
+            {
+                return;
+            }
+            else
+            {
+                CurrentTarget = null;
+            }
+        }
+
 
         if (enemiesInRange.Count == 0)
         {
@@ -107,8 +120,9 @@ public class TargetingComponent : MonoBehaviour
             CurrentTarget = null;
             isSearching = true;
         }
-       // CurrentTarget = bestTarget;
+        // CurrentTarget = bestTarget;
     }
+
 
     private bool HasLineOfSight(Transform target)
     {
@@ -128,10 +142,10 @@ public class TargetingComponent : MonoBehaviour
                 return true;
             }
             else
-            {               
+            {
                 return false;
             }
-            
+
         }
         return true;
     }
